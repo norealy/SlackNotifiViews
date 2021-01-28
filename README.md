@@ -17,7 +17,6 @@
 
 Bạn cần access token , hoặc tạo ứng dụng [Create App](https://api.slack.com/apps?new_app=1)
 
-
 **1. Chuẩn bị**
 
 Sau khi gửi chế độ xem phương thức, một trọng tải tương tác sẽ được gửi đến URL yêu cầu của ứng dụng của bạn. Ngoài ra, nếu chế độ xem của bạn bao gồm bất kỳ thành phần tương tác nào của Bộ công cụ khối, bạn cũng sẽ nhận được tải trọng tương tác khi sử dụng thành phần.

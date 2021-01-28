@@ -6,7 +6,7 @@ function x() {
         let i = 0;
         while (i < 24) {
             let j = 0
-            for (j = 0; j <= 60; j++) {
+            for (j = 0; j < 46; j++) {
                 
                 let datetimePicker = {
                     "text": {

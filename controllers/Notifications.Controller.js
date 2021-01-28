@@ -10,7 +10,7 @@ const getNotis = async (req, res) => {
             return res.status(200).send(challenge);
         }
 
-        // console.log(req.body)
+        console.log(req.body)
 
         let payload = req.body.payload;
         let viewsAdd = Object.assign({}, viewsDesign.addEvent);
