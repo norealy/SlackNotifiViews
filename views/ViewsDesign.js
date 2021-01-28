@@ -1,3 +1,5 @@
+const { arrayDateTime } = require('../utils/DatetimePicker');
+
 const deleteEvent = {
 	"title": {
 		"type": "plain_text",
@@ -67,34 +69,18 @@ const listEvent = [
 				"type": "mrkdwn",
 				"text": "27-02-2021"
 			}
-		]
-	},
-	{
-		"type": "actions",
-		"elements": [
-			{
-				"type": "button",
-				"text": {
-					"type": "plain_text",
-					"emoji": true,
-					"text": "Update"
-				},
-				"style": "primary",
-				"value": "buttonUpdate",
-				"action_id": "buttonUpdate"
+		],
+		"accessory": {
+			"type": "button",
+			"text": {
+				"type": "plain_text",
+				"text": "Edit",
+				"emoji": true
 			},
-			{
-				"type": "button",
-				"text": {
-					"type": "plain_text",
-					"emoji": true,
-					"text": "Delete"
-				},
-				"style": "danger",
-				"value": "buttonDelete",
-				"action_id": "buttonDelete"
-			}
-		]
+			"style": "primary",
+			"value": "buttonUpdate",
+			"action_id": "buttonUpdate"
+		}
 	},
 	{
 		"type": "section",
@@ -117,10 +103,10 @@ const listCalendar = [
 			"initial_option": {
 				"value": "value-0",
 				"text": {
-				  "type": "plain_text",
-				  "text": "Calendar 1"
+					"type": "plain_text",
+					"text": "Calendar 1"
 				}
-			  },
+			},
 			"options": [
 				{
 					"text": {
@@ -317,19 +303,20 @@ let timeStart =
 	"type": "section",
 	"text": {
 		"type": "mrkdwn",
-		"text": "Time start event"
+		"text": "Time end event"
 	},
 	"accessory": {
-		"type": "timepicker",
-		"initial_time": "13:30",
+		"type": "static_select",
 		"placeholder": {
 			"type": "plain_text",
-			"text": "Select time",
+			"text": "02:00 AM",
 			"emoji": true
 		},
-		"action_id": "timepicker-action"
+		"options": arrayDateTime,
+		"action_id": "timeStartActions"
 	}
 }
+
 let timeEnd =
 {
 	"type": "section",
@@ -338,14 +325,14 @@ let timeEnd =
 		"text": "Time end event"
 	},
 	"accessory": {
-		"type": "timepicker",
-		"initial_time": "14:00",
+		"type": "static_select",
 		"placeholder": {
 			"type": "plain_text",
-			"text": "Select time",
+			"text": "02:00 AM",
 			"emoji": true
 		},
-		"action_id": "timepicker-action2"
+		"options": arrayDateTime,
+		"action_id": "timeEndActions"
 	}
 }
 
@@ -353,7 +340,7 @@ let dateEnd = {
 	"type": "section",
 	"text": {
 		"type": "mrkdwn",
-		"text": "Date end of the event all day "
+		"text": "Date of the event"
 	},
 	"accessory": {
 		"type": "datepicker",
@@ -363,7 +350,7 @@ let dateEnd = {
 			"text": "Date event at ",
 			"emoji": true
 		},
-		"action_id": "datepicker-action1"
+		"action_id": "datepicker-action"
 	}
 }
 
@@ -568,9 +555,10 @@ const addEvent = {
 }
 
 const editEvent = {
+	"type": "modal",
 	"title": {
 		"type": "plain_text",
-		"text": "BOT NOTI CALENDARS ",
+		"text": "My App",
 		"emoji": true
 	},
 	"submit": {
@@ -578,7 +566,6 @@ const editEvent = {
 		"text": "Submit",
 		"emoji": true
 	},
-	"type": "modal",
 	"close": {
 		"type": "plain_text",
 		"text": "Cancel",
@@ -638,8 +625,6 @@ const editEvent = {
 				"action_id": "datepicker-action"
 			}
 		},
-		timeStart,
-		timeEnd,
 		{
 			"type": "input",
 			"element": {
@@ -744,6 +729,24 @@ const editEvent = {
 				"type": "plain_text",
 				"text": "Remind me",
 				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Do you want to delete event?"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": "Delete",
+					"emoji": true
+				},
+				"style": "danger",
+				"value": "buttonDelete",
+				"action_id": "buttonDelete"
 			}
 		}
 	]

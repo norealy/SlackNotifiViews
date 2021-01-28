@@ -2,6 +2,7 @@ const ENV = require('../utils/Env');
 const axios = require('axios');
 const viewsDesign = require('../views/ViewsDesign');
 const tokenBot = ENV.get("TOKEN_BOT")
+
 const getNotis = async (req, res) => {
     try {
         const challenge = req.body.challenge;
@@ -48,14 +49,14 @@ const getNotis = async (req, res) => {
                     url: `https://slack.com/api/views.open`
                 };
                 const result = await axios(options);
-
+                console.log(result.data)
                 return res.status(202).send(`Thank you call BOT-NOTI ! 
             If you want assistance please enter: /cal --help`);
             }
             else if (req.body.text.split(" ")[0] === "all") {
-
+                
                 const data = {
-                    "channel": "C01LK9QRNE4",
+                    "channel": "C01K8K0PKLL",
                     "blocks": viewsDesign.listCalendar
                 }
                 const options = {
@@ -65,21 +66,22 @@ const getNotis = async (req, res) => {
                     url: `https://slack.com/api/chat.postMessage`
                 };
                 const result = await axios(options);
-
+                console.log(result.data)
                 return res.status(202).send(`Thank you call BOT-NOTI !
                         If you want assistance please enter:  /cal --help`);
             }
             else if (req.body.text.split(" ")[0] === "--help") {
                 return res.status(202).send(`Thank you use BOT-NOTI ! 
-            ----------------------------------------------------
-            Settings calendar to Channel : /cal settings
-            Add event calendar : /cal add-event
-            List calendar  : /cal all
-            If you want assistance please enter:  /cal --help`);
+                ----------------------------------------------------
+                Settings calendar to Channel : /cal settings
+                Add event calendar : /cal add-event
+                List calendar  : /cal all
+                If you want assistance please enter:  /cal --help`);
 
             }
         }
         else if (payload.type === 'block_actions') {
+            console.log(req.body)
             let data,url;
             if (payload.actions[0].action_id === 'allday') {
                 viewsAdd.blocks = payload.view.blocks;
@@ -116,7 +118,7 @@ const getNotis = async (req, res) => {
                     "trigger_id": payload.trigger_id,
                     "view": viewsDesign.deleteEvent
                 }
-                url = `https://slack.com/api/views.open`;
+                url = `https://slack.com/api/views.push`;
             }
             else if (payload.actions[0].action_id === "buttonUpdate") {
                 data = {
@@ -128,13 +130,12 @@ const getNotis = async (req, res) => {
             else if (payload.actions[0].action_id === 'deleteOK') {
                 console.log("ABC")
                 console.log(payload)
-                url = `https://slack.com/api/views.update`;
+                url = `https://slack.com/api/views.open`;
                 data = {
                     "view_id": payload["container"]["view_id"],
                     "view": payload.view
                 }
             }
-
 
             const options = {
                 method: 'POST',
@@ -143,7 +144,9 @@ const getNotis = async (req, res) => {
                 url: url
             };
             const result = await axios(options);
-            // console.log(result.data.response_metadata)
+
+            
+            console.log(result.data.response_metadata)
             return res.status(202).send(`Thank you call BOT-NOTI !
             If you want assistance please enter:  /cal --help`);
         }
@@ -166,7 +169,6 @@ const getNotis = async (req, res) => {
             });
         }
         else {
-
             return res.status(202).send(`Please  use syntax BOT-NOTI ! 
             ----------------------------------------------------
             Settings calendar to Channel : /cal settings
